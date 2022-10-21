@@ -1,38 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CommentDocument } from 'src/schemas/comment.model';
+import { Comment, CommentDocument } from 'src/schemas/comment.model';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-
+import { User } from 'src/schemas/user.model';
 @Injectable()
 export class CommentsService {
-    // constructor(
-    //     @InjectModel("comment") 
-    //     private commentModel: Model<CommentDocument>
-    // ) {}
+    constructor(
+        @InjectModel(Comment.name) 
+        private commentModel: Model<CommentDocument>
+    ) {}
 
-    // async getcomment(): Promise<Comment[]> {
-    //     try {
-    //         const comments:Comment[] = await this.commentModel.find({});
-    //         return comments;
-    //     } catch (err) {
-    //         console.log('error...');
-    //     }
-    // }
-    // async getOne(id:string):Promise<Comment>{
-    //     const comment = await this.commentModel.findById({_id:id});
-    //     return comment
-    // }
-    // async createcomment(data:CreateCommentDto):Promise<Comment>{
-    //     console.log(data)
-    //     const a = await this.commentModel.create({
-    //         ...data
-    //     })
-    //     a.save()
-    //     return a
-    // }
-    // async updatecomment(id:string,data:UpdateCommentDto):Promise<Comment>{
+    async getcomment(): Promise<Comment[]> {
+        try {
+            const comments:Comment[] = await this.commentModel.find({});
+            return comments;
+        } catch (err) {
+            console.log('error...');
+        }
+    }
+    async getOne(id:string):Promise<Comment>{
+        const comment = await this.commentModel.findById({_id:id}).populate("owner")
+        // console.log(comment.populate("owner"));
+        return comment
+    }
+    async createComment(data:CreateCommentDto){
+        console.log(data)
+        const a = await this.commentModel.create({
+            ...data
+        })
+        a.save()
+        return a
+    }
+    // async updateComment(id:string,data:UpdateCommentDto):Promise<Comment>{
     //     try{
     //        await this.commentModel.findByIdAndUpdate({_id:id},{
     //             $set:data

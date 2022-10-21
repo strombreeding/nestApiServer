@@ -1,13 +1,15 @@
 import { Prop,  Schema,  SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, ObjectId, Types } from 'mongoose';
+import { Comment } from './comment.model';
 
 export type UserDocument = User & Document;
 
 
 @Schema()
 export class User{
+  // @Prop()
+  // _id:ObjectId ;  
 
-  
   @Prop()
   email: string;
   
@@ -27,7 +29,7 @@ export class User{
   likes:string[]
 
   @Prop([{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}])
-  ownComments : string[]
+  ownComments : Comment[]
 
   @Prop({ default:Date.now })
   createdAt:Date;

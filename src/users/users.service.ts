@@ -7,13 +7,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UserService {
     constructor(
-        @InjectModel("user") 
+        @InjectModel(User.name) 
         private userModel: Model<UserDocument>
     ) {}
 
     async getUser(): Promise<User[]> {
         try {
             const users:User[] = await this.userModel.find({});
+            console.log(users)
             return users;
         } catch (err) {
             console.log('error...');
@@ -21,6 +22,7 @@ export class UserService {
     }
     async getOne(id:string):Promise<User>{
         const user = await this.userModel.findById({_id:id});
+        console.log(user)
         return user
     }
     async createUser(data:CreateUserDto):Promise<User>{
