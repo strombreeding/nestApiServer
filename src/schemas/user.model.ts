@@ -7,21 +7,31 @@ export type UserDocument = User & Document;
 @Schema()
 export class User{
 
-  @Prop({ default:Date.now, type:Date })
-  createdAt: Date;
-
-
+  
+  @Prop()
+  email: string;
+  
   @Prop({required:true,minlength:2}) 
   userName: string; 
-
+  
   @Prop()
-  skils: string[];
+  avatarUrl:string;
+  
+  @Prop([{type:mongoose.Schema.Types.ObjectId, ref:"Ticket"}])
+  ownTickets: string[];
+  
+  @Prop([{type:mongoose.Schema.Types.ObjectId, ref:"Crew"}])
+  crews:string[]
+  
+  @Prop([{type:mongoose.Schema.Types.ObjectId, ref:"Midea"}])
+  likes:string[]
 
-  @Prop({required:true})
-  phoneNum: number;
+  @Prop([{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}])
+  ownComments : string[]
+
+  @Prop({ default:Date.now })
+  createdAt:Date;
   
-  
- 
 }
 
 

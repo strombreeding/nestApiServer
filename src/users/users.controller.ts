@@ -6,10 +6,11 @@ import {
     Param,
     Patch,
     Delete,
+    Put,
   } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-  import { UserService } from './users.service';
+import { UserService } from './users.service';
   
   @Controller('users')
   export class UsersController {
@@ -30,7 +31,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
     const user = await this.usersService.getOne(id)
     return user
   }
-  @Patch("/:id")
+  @Put("/:id")
   async updateUser(@Param("id") id:string,@Body() data:UpdateUserDto) {
     const a =this.usersService.updateUser(id,data)
     return  a

@@ -4,11 +4,13 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { CommentsModule } from './comments/comments.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URL),
-    UsersModule
+    UsersModule,
+    CommentsModule
   ],
   controllers: [AppController],
   providers: [AppService],
