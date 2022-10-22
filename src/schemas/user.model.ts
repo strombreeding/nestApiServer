@@ -3,8 +3,17 @@ import mongoose, { Document, ObjectId, Types } from 'mongoose';
 import { Comment } from './comment.model';
 
 export type UserDocument = User & Document;
-
-
+export type IncludeDocument = Include & Document;
+@Schema()
+export class Include{
+  @Prop()
+  name:string;
+  @Prop()
+  bornYear : number;
+  @Prop()
+  email:string
+}
+export const IncludeSchema = SchemaFactory.createForClass(Include)
 @Schema()
 export class User{
   // @Prop()

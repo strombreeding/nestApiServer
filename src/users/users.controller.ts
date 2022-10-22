@@ -7,7 +7,9 @@ import {
     Patch,
     Delete,
     Put,
+    Redirect,
   } from '@nestjs/common';
+import { Include } from 'src/schemas/user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
@@ -15,6 +17,16 @@ import { UserService } from './users.service';
   @Controller('users')
   export class UsersController {
     constructor(private readonly usersService: UserService) {}
+
+  @Post("/db")
+  async createDB(@Body() data:{
+    name:string,
+    bornYear:number,
+    email:string
+  }){
+    await this.usersService.fakeDb(data)
+    return 
+  }    
   @Get()
   async getAll(){
     const users = await this.usersService.getUser()

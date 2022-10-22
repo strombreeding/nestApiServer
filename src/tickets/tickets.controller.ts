@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post,Delete,Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post,Delete,Put, Query } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { TicketsService } from './tickets.service';
 
@@ -6,9 +6,15 @@ import { TicketsService } from './tickets.service';
 export class TicketsController {
     constructor(private readonly ticketsService: TicketsService) {}
     @Get()
-    async getAll(){
-      const users = await this.ticketsService.getAll()
-      return users
+    async getAll(@Query() data:{year:string,month:string}){
+      console.log(data)
+      const tickets = await this.ticketsService.getAll(data)
+      return tickets
+    }
+    @Get('/day')
+    async getDayAll(@Query() data:{year:string,month:string}){
+      const tickets = await this.ticketsService.getDayAll(data)
+      return tickets
     }
     @Post()
     async createUser(@Body() data:CreateTicketDto){
