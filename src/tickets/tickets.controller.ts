@@ -12,7 +12,7 @@ export class TicketsController {
       return tickets
     }
     @Get('/day')
-    async getDayAll(@Query() data:{year:string,month:string}){
+    async getDay(@Query() data:{year:string,month:string,day:string}){
       const tickets = await this.ticketsService.getDayAll(data)
       return tickets
     }

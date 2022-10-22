@@ -15,11 +15,20 @@ export class TicketsService {
         const tickets = await this.ticketModel.find({year:data.year,month:data.month}).populate("owner")
         return tickets
     }
-    async getDayAll(data:{year:string,month:string}):Promise<Ticket[]>{
-        const {year,month}=data
-        const tickets = await this.ticketModel.find({year,month}).populate("owner")
-        console.log(tickets)
-        return tickets
+    async getDayAll(data:{year:string,month:string,day:string}):Promise<Ticket[]>{
+        const {year,month,day}=data
+        const tickets = await this.ticketModel.find({year,month,day}).populate("owner")
+        let a = []
+        for (let i = 0; i < tickets.length; i++) {
+            const b= {
+                day:tickets[i].day,
+                owner:tickets[i].owner.userName,
+                date:tickets[i].time
+            }
+            a.push(b)
+        }
+        console.log(a)
+        return a
     }
 
     async getOne(id:string):Promise<Ticket>{

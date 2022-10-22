@@ -3,11 +3,13 @@ import { ObjectId } from "mongoose";
 
 
 export class CreateTicketDto{
-    @IsString()
-    owner: ObjectId;
+    // @IsString()
     // crew : ObjectId
     @IsArray()
     date:[string,string,string,string];
+    
+    @IsString()
+    owner: ObjectId;
     // @IsNumber()
     // year : number;
     // @IsNumber()

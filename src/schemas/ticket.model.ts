@@ -12,8 +12,6 @@ export class Ticket {
     owner: User;
     // @Prop({type:mongoose.Schema.Types.ObjectId, ref:"Crew"})
     // crew : Crew
-
-
     @Prop()
     year : number;
     @Prop()
