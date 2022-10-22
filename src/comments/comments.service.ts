@@ -22,7 +22,7 @@ export class CommentsService {
     }
     async getOne(id:string):Promise<Comment>{
         const comment = await this.commentModel.findById({_id:id}).populate("owner")
-        // console.log(comment.populate("owner"));
+        console.log(typeof comment.createdAt.getFullYear());
         return comment
     }
     async createComment(data:CreateCommentDto){
