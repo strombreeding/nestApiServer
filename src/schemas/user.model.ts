@@ -23,7 +23,7 @@ export class Youth{
   email: string;
   
   @Prop({required:true,minlength:2}) 
-  userName: string; 
+  username: string; 
   
   @Prop()
   avatarUrl:string;
