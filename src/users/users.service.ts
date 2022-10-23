@@ -1,7 +1,7 @@
 import { Error, Model } from 'mongoose';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument, Include, IncludeDocument } from '../schemas/user.model';
+import { Youth, YouthDocument, Include, IncludeDocument } from '../schemas/user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 const arr = [
@@ -21,8 +21,8 @@ const arr = [
 @Injectable()
 export class UserService {
     constructor(
-        @InjectModel(User.name) 
-        private userModel: Model<UserDocument>,
+        @InjectModel(Youth.name) 
+        private userModel: Model<YouthDocument>,
         @InjectModel(Include.name) 
         private includeModel:Model<IncludeDocument>
     ) {}
@@ -38,30 +38,30 @@ export class UserService {
             })
     }
 
-    async getUser(): Promise<User[]> {
+    async getUser(): Promise<Youth[]> {
         try {
-            const users:User[] = await this.userModel.find({});
+            const users:Youth[] = await this.userModel.find({});
             console.log(users)
             return users;
         } catch (err) {
             console.log('error...');
         }
     }
-    async getOne(id:string):Promise<User>{
+    async getOne(id:string):Promise<Youth>{
         const user = await this.userModel.findById({_id:id});
         console.log(user)
         return user
     }
-    async createUser(data:CreateUserDto):Promise<User>{
+    async createUser(data:CreateUserDto):Promise<Youth>{
         try{
-            const includeYouth = await this.includeModel.exists({name:data.userName})
-            if(!includeYouth){ // 요람에서 찾을때 name, bornYear 조건으로 찾아야함. 카카오 승인=생년월일
-                throw new HttpException(
-                    {errorMsg:"요람에 없음, 관리자 승인 필요"},
-                    HttpStatus.NOT_FOUND
-                    )
-            }
-            console.log(data)
+            // const includeYouth = await this.includeModel.exists({name:data.userName})
+            // if(!includeYouth){ // 요람에서 찾을때 name, bornYear 조건으로 찾아야함. 카카오 승인=생년월일
+            //     throw new HttpException(
+            //         {errorMsg:"요람에 없음, 관리자 승인 필요"},
+            //         HttpStatus.NOT_FOUND
+            //         )
+            // }
+            // console.log(data)
             const a = await this.userModel.create({
                 ...data
             })
@@ -71,7 +71,7 @@ export class UserService {
             return err
         }
     }
-    async updateUser(id:string,data:UpdateUserDto):Promise<User>{
+    async updateUser(id:string,data:UpdateUserDto):Promise<Youth>{
         try{
            await this.userModel.findByIdAndUpdate({_id:id},{
                 $set:data
@@ -83,7 +83,7 @@ export class UserService {
             return err
         }
     }
-    async deleteUser(id:string):Promise<User>{
+    async deleteUser(id:string):Promise<Youth>{
         try{
             const a = await this.getOne(id)
             await this.userModel.deleteOne({_id:id})

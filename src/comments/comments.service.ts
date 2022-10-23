@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Comment, CommentDocument } from 'src/schemas/comment.model';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { User } from 'src/schemas/user.model';
+import { Youth } from 'src/schemas/user.model';
 @Injectable()
 export class CommentsService {
     constructor(

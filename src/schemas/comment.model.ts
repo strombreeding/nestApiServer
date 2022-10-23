@@ -1,6 +1,6 @@
 import { Prop,  Schema,  SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document,Types,Schema as MongooseSchema, ObjectId } from 'mongoose';
-import { User } from './user.model';
+import { Youth } from './user.model';
 
 export type CommentDocument = Comment & Document;
 
@@ -21,7 +21,7 @@ export class Comment{
 //   @Prop([{type:mongoose.Schema.Types.ObjectId, ref:"Post"}])
 //   include:string
   @Prop( {type:mongoose.Schema.Types.ObjectId, ref:"User"})
-  owner: User;
+  owner: Youth;
 
   @Prop({ default:Date.now })
   createdAt:Date;

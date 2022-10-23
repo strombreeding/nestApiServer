@@ -2,7 +2,7 @@ import { Prop,  Schema,  SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, ObjectId, Types } from 'mongoose';
 import { Comment } from './comment.model';
 
-export type UserDocument = User & Document;
+export type YouthDocument = Youth & Document;
 export type IncludeDocument = Include & Document;
 @Schema()
 export class Include{
@@ -15,7 +15,7 @@ export class Include{
 }
 export const IncludeSchema = SchemaFactory.createForClass(Include)
 @Schema()
-export class User{
+export class Youth{
   // @Prop()
   // _id:ObjectId ;  
 
@@ -46,4 +46,4 @@ export class User{
 }
 
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const YouthSchema = SchemaFactory.createForClass(Youth);

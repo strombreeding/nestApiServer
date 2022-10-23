@@ -1,6 +1,6 @@
 import { IsDate, IsNumber, IsString } from "class-validator";
 import { ObjectId } from "mongoose";
-import { User } from "src/schemas/user.model";
+import { Youth } from "src/schemas/user.model";
 
 
 export class CreateCommentDto{
