@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Youth, YouthDocument, Include, IncludeDocument } from '../schemas/user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Jwt, JwtDocument } from 'src/schemas/jwt.model';
 const arr = [
     {
         name:"이진희",
@@ -24,7 +25,9 @@ export class UserService {
         @InjectModel(Youth.name) 
         private userModel: Model<YouthDocument>,
         @InjectModel(Include.name) 
-        private includeModel:Model<IncludeDocument>
+        private includeModel:Model<IncludeDocument>,
+        @InjectModel(Jwt.name) 
+        private jwtModel:Model<JwtDocument>
     ) {}
     async fakeDb (
         data:{
