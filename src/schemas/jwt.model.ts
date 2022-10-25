@@ -11,6 +11,8 @@ export class Jwt {
     uniqueId : string;
     @Prop({type:Date,expires:20,default:Date.now})
     createdAt: Date;
+    @Prop()
+    refresh_token:string
 }
 
 export const JwtSchema = SchemaFactory.createForClass(Jwt)

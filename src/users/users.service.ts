@@ -5,29 +5,19 @@ import { Youth, YouthDocument, Include, IncludeDocument } from '../schemas/user.
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Jwt, JwtDocument } from 'src/schemas/jwt.model';
-const arr = [
-    {
-        name:"이진희",
-        bornYear:1995,
-        email:"speaker1403@gmail.com"
-    },
-    {
-        name:"이태민",
-        bornYear:1995,
-        email:"philomon@naver.com"
-    }
-]
+import { JwtService } from '@nestjs/jwt';
 
 
 @Injectable()
 export class UserService {
     constructor(
+        private readonly jwtService:JwtService,
         @InjectModel(Youth.name) 
         private userModel: Model<YouthDocument>,
         @InjectModel(Include.name) 
         private includeModel:Model<IncludeDocument>,
         @InjectModel(Jwt.name) 
-        private jwtModel:Model<JwtDocument>
+        private jwtModel:Model<JwtDocument>,
     ) {}
     async fakeDb (
         data:{
@@ -40,14 +30,27 @@ export class UserService {
                 ...data
             })
     }
-
     async getUser(): Promise<Youth[]> {
         try {
             const users:Youth[] = await this.userModel.find({});
             console.log(users)
+            if(users[0]){
+                const payload = {username:users[0].username,uniqueId:users[0]._id} ;
+                const access_token = this.jwtService.sign(payload,{expiresIn:"10s"})
+                const refresh_token = this.jwtService.sign(payload,{expiresIn:"30s"})
+                console.log(refresh_token)
+                const decode = this.jwtService.decode(access_token)
+                console.log(JSON.parse(JSON.stringify(decode)))
+                const id = await this.jwtModel.create({
+                    username:payload.username,
+                    refresh_token,
+                    uniqueId:users[0]._id
+                })
+                console.log(id)
+            }
             return users;
         } catch (err) {
-            console.log('error...');
+            console.error(err);
         }
     }
     async getOne(id:string):Promise<Youth>{
@@ -60,16 +63,17 @@ export class UserService {
             // const includeYouth = await this.includeModel.exists({name:data.userName})
             // if(!includeYouth){ // 요람에서 찾을때 name, bornYear 조건으로 찾아야함. 카카오 승인=생년월일
             //     throw new HttpException(
-            //         {errorMsg:"요람에 없음, 관리자 승인 필요"},
-            //         HttpStatus.NOT_FOUND
-            //         )
-            // }
-            // console.log(data)
-            const a = await this.userModel.create({
-                ...data
-            })
-            a.save()
-            return a
+                //         {errorMsg:"요람에 없음, 관리자 승인 필요"},
+                //         HttpStatus.NOT_FOUND
+                //         )
+                // }
+                // console.log(data)
+                const a = await this.userModel.create({
+                    ...data
+                })
+                a.save()
+
+                return a
         }catch(err){
             return err
         }

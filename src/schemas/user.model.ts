@@ -18,7 +18,8 @@ export const IncludeSchema = SchemaFactory.createForClass(Include)
 export class Youth{
   // @Prop()
   // _id:ObjectId ;  
-
+  @Prop({type:mongoose.Types.ObjectId})
+  _id:string;
   @Prop()
   email: string;
   
