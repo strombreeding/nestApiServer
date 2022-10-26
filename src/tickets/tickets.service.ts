@@ -24,9 +24,9 @@ export class TicketsService {
         let a = []
         for (let i = 0; i < tickets.length; i++) {
             const b= {
+                date:tickets[i].time,
                 day:tickets[i].day,
                 owner:tickets[i].owner.username,
-                date:tickets[i].time
             }
             a.push(b)
         }
