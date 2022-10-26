@@ -19,7 +19,7 @@ export class TicketsService {
     }
     async getDayAll(data:{year:string,month:string,day:string}):Promise<Ticket[]>{
         const {year,month,day}=data
-        const tickets = await this.ticketModel.find({year,month,day}).populate("owner")
+        const tickets = await this.ticketModel.find({year,month,day}).sort({time:1}).populate("owner")
         console.log(tickets)
         let a = []
         for (let i = 0; i < tickets.length; i++) {
@@ -30,7 +30,6 @@ export class TicketsService {
             }
             a.push(b)
         }
-        console.log(a.sort())
         return a
     }
 
