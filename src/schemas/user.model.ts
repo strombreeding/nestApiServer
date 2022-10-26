@@ -16,10 +16,11 @@ export class Include{
 export const IncludeSchema = SchemaFactory.createForClass(Include)
 @Schema()
 export class Youth{
+  static findById(_id: any) {
+      throw new Error('Method not implemented.');
+  }
   // @Prop()
   // _id:ObjectId ;  
-  @Prop({type:mongoose.Types.ObjectId})
-  _id:string;
   @Prop()
   email: string;
   
@@ -43,6 +44,9 @@ export class Youth{
 
   @Prop({ default:Date.now })
   createdAt:Date;
+
+  @Prop({default:null})
+  refresh_token:string
   
 }
 

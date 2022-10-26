@@ -30,7 +30,7 @@ export class TicketsService {
             }
             a.push(b)
         }
-        console.log(a)
+        console.log(a.sort())
         return a
     }
 

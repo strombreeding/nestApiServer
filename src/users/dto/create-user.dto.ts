@@ -5,7 +5,7 @@ export class CreateUserDto{
     @IsEmail()
     readonly email:string;
     @IsString()
-    readonly userName: string; // 필드 이름: 타입(타입스크립트 타입)
+    readonly username: string; // 필드 이름: 타입(타입스크립트 타입)
     @IsString()
     readonly avatarUrl: string; // 필드 이름: 타입(타입스크립트 타입)
     @IsString({each:true})
