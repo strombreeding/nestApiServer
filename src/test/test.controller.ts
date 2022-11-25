@@ -1,5 +1,6 @@
+import { CreateTestDto } from './dto/test-create.dto';
 import { TestStatus } from './test.entity';
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TestService } from './test.service';
 import { TestStatusUpdate } from './pipes/test-status.pipe';
 
@@ -13,5 +14,12 @@ export class TestController {
         console.log(TestStatus)
         return this.testService.getTest()
     }
+    @Post()
+    createTest(@Body() data:CreateTestDto){
+            const create = this.testService.createTest(data)
+            return create
+    }
+    
+
 }
 
