@@ -7,10 +7,20 @@ export class TestStatusUpdate implements PipeTransform{
         TestStatus.PUBLIC
     ]
     transform(value: any, metadata: ArgumentMetadata) {
-        if(!this.enumTestStatus.includes(value)){
-            throw new BadRequestException("아 제대로 골라라");
+        console.log("value",value)
+        const {title,description}=value
+        let {status} = value
+        status= status.toUpperCase()
+        
+        const toUpdate = {
+            ...(title && { title }),
+            ...(description && { description }),
+            ...(status && { status }),
+        }; 
+        if(!this.enumTestStatus.includes(status)){
+            throw new BadRequestException(`[PUBLIC, PRIVATE] 중 하나로 입력해야합니다.`);
         }
-        return value
+        return toUpdate
     }
     
 }

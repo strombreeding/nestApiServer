@@ -5,7 +5,7 @@ export const typeORMConfig : TypeOrmModuleOptions = {
     host:"localhost",
     port:5432,
     username:"postgres",
-    password:"wlsgml1403",
+    password:process.env.DB_PW,
     database:"2eum-app",
 
     entities:[__dirname +"/../**/*.entity.{js,ts}"],

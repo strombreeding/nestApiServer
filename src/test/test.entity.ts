@@ -1,5 +1,9 @@
 import { BaseEntity, PrimaryGeneratedColumn,Column, Entity } from "typeorm";
 
+export enum TestStatus {
+    PUBLIC = "PUBLIC",
+    PRIVATE = "PRIVATE",
+}
 @Entity()
 export class Test extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -11,13 +15,8 @@ export class Test extends BaseEntity {
     @Column()
     description:string;
 
-    @Column()
-    status :TestStatus;
+    @Column({default:TestStatus.PUBLIC})
+    status :string;
 
 }
 
-
-export enum TestStatus {
-    PUBLIC = "PUBLIC",
-    PRIVATE = "PRIVATE",
-}

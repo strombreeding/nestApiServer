@@ -1,4 +1,6 @@
-import { BadRequestException } from '@nestjs/common';
+import { UpdateTestDto } from './dto/test-update.dto';
+import { TestStatusUpdate } from './pipes/test-status.pipe';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CreateTestDto } from './dto/test-create.dto';
 import { TestRepository } from './test.repository';
 import { Injectable } from '@nestjs/common';
@@ -10,19 +12,25 @@ export class TestService {
     constructor(
         @InjectRepository(TestRepository)
         private testRepository: TestRepository
-        ){}
+    ){}
     
-    async getTest(){
- 
-        return "하하하"
+    async getOne(id:number):Promise<Test>{
+        const test = await this.testRepository.findOne({where:{id}})
+        return test
     }
-    async createTest(data:CreateTestDto):Promise<Test>{
-        const {title,description} = data
-        console.log(data)
-            console.log("들어오긴함")
-            const created =  this.testRepository.create({ title, description,status:TestStatus.PUBLIC })
-            await this.testRepository.save(created)
-            return created
-        
+    getTest():Promise<Test[]>{
+        const tests = this.testRepository.getTests();
+        return tests
+    }
+    createTest(data:CreateTestDto):Promise<Test>{
+        const created =  this.testRepository.createTest(data)
+        return created
+    }
+
+    updateStatus(id:number,data:UpdateTestDto):Promise<Test>{
+        console.log("in Service data : ",id,data)
+        if(Object.keys(data).length===0)throw new NotFoundException("변경내역이 없습니다.")
+        const update = this.testRepository.updateStatus(id,data)
+        return update
     }
 }

@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateTestDto{
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     readonly title:string;
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     readonly description:string;
 
 }
