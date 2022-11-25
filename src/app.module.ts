@@ -6,22 +6,19 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { CommentsModule } from './comments/comments.module';
 import { TicketsModule } from './tickets/tickets.module';
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
+import { typeORMConfig } from './configs/typeorm.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TestModule } from './test/test.module';
 @Module({
   imports: [
-    // PassportModule.register({defaultStrategy:"jwt"}),
-    // JwtModule.register({
-    //   secret:"zzz",
-    //   signOptions:{
-    //     expiresIn:60,
-    //   }
-    // }),
+
     ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(typeORMConfig),
     MongooseModule.forRoot(process.env.MONGO_URL),
     UsersModule,
     CommentsModule,
-    TicketsModule
+    TicketsModule,
+    TestModule
   ],
   controllers: [AppController],
   providers: [AppService],
